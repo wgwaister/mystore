@@ -1,5 +1,5 @@
 from django.shortcuts import redirect,render
-
+from django.contrib.auth.decorators import permission_required
 from .models import Product
 from .forms import ProductForm
 # Create your views here.
@@ -8,6 +8,7 @@ def product_index(request):
     products = Product.objects.all()
     return render(request, 'estore/product_index.html', {'products': products})
 
+@permission_required('estore.add_product')
 def product_new(request):
     if request.method == "POST":
         form = ProductForm(request.POST)
